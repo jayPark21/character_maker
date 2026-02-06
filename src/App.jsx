@@ -7,36 +7,36 @@ import './App.css';
 
 // Image paths pointing to the 'public/assets' folder
 const ASSETS = {
-  characterBase: "/assets/base_character.png",
+  characterBase: "assets/base_character.png",
   items: [
     {
       id: 'jeans',
       name: 'Heart Jeans',
-      img: "/assets/jeans.png",
+      img: "assets/jeans.png",
       prompt: "Image Variation: Using the character in the reference image (purple hair girl in pigtails), transform her outfit to be wearing blue denim jeans with a heart and flower pattern while maintaining her exact facial features and hair style. Flat vector style."
     },
     {
       id: 'skirt',
       name: 'Pink Skirt',
-      img: "/assets/skirt.png",
+      img: "assets/skirt.png",
       prompt: "Image Variation: Using the reference character's face and purple hair, change her bottom clothing to a pink mini skirt with a heart and flower design. Keep the character's identity consistent. Flat vector style."
     },
     {
       id: 'hanbok',
       name: 'Lovely Hanbok',
-      img: "/assets/hanbok.png",
+      img: "assets/hanbok.png",
       prompt: "Image Variation: Based on the reference character, transform her clothing into a traditional Korean Hanbok with a blue top and cream skirt. Must maintain the same facial features and purple pigtails. Flat vector style."
     },
     {
       id: 'dress',
       name: 'Denim Dress',
-      img: "/assets/dress.png",
+      img: "assets/dress.png",
       prompt: "Image Transformation: Apply a long-sleeved blue denim dress to the reference character. Ensure the purple hair, ribbons, and facial identity remain identical to the base image. Flat vector style."
     },
     {
       id: 'iron-suit',
       name: 'Iron Suit',
-      img: "/assets/iron_suit_result.png",
+      img: "assets/iron_suit_result.png",
       prompt: "Image Transformation: Transform the reference character into a superhero wearing a full-body red and gold iron suit. The character's face and purple hair should be visible and consistent with the base model. Flat vector style."
     }
   ]
