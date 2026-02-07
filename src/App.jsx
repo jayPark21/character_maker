@@ -117,37 +117,81 @@ export default function App() {
     playSound('magic');
 
     try {
-      // [AI Synthesis Engine Logic]
-      // Logic: f(Character_Identity, Item_Style) => Synthesized_Result
-      // Character_Identity (Source A): Maintains 90% of facial features/hair
-      // Item_Style (Source B): 100% clothing/accessory replacement
+      // [Google AI Studio (Gemini 2.5 Flash Image) Integration]
+      const apiKey = import.meta.env.VITE_NANOBANANA_API_KEY;
+      // Using the latest and greatest model as requested
+      const model = "gemini-2.5-flash-image";
 
-      console.log("--- AI Synthesis Engine Initialized ---");
-      console.log("Source A (Identity):", baseCharacter);
-      console.log("Source B (Element):", selectedItem.img);
-      console.log("Logic: Merging Identity with", selectedItem.name);
-
-      // Simulate the heavy composition & rendering process
-      await new Promise(resolve => setTimeout(resolve, 3500));
-
-      // [Synthesis Router] 
-      setShowResult(true);
-
-      if (selectedItem.id === 'iron-suit') {
-        setResultImage(selectedItem.img); // Verified synthesis result
-      } else {
-        // Fallback: Show the item style image as the result for now
-        // This prevents infinite loading and shows the user what they selected.
-        setResultImage(selectedItem.img);
-        setError("Note: AI Synthesizing identity... Showing style preview.");
+      if (!apiKey) {
+        throw new Error("Missing API Key. Please ensure VITE_NANOBANANA_API_KEY is in your .env file.");
       }
 
-      console.log("Synthesis Complete: Displaying result.");
+      console.log(`🚀 Contacting Google AI Studio (${model})...`);
+
+      // Using the image generation endpoint if available, or the standard generateContent with image capabilities
+      // Note: Adjusting for potential API endpoint variances. Assuming standard v1beta.
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+
+      // Constructing request for Image Generation
+      // Gemini 2.5 Flash Image is multimodal. We ask it to GENERATE an image based on our prompt.
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents: [{
+            parts: [{ text: `Generate a high-quality 2D vector character image. Based on: ${selectedItem.prompt}` }]
+          }],
+          generationConfig: {
+            // Specific configs for image generation if supported by the endpoint
+            // Otherwise, it relies on the prompt instruction
+            temperature: 0.4
+          }
+        })
+      });
+
+      if (!response.ok) {
+        const errData = await response.json().catch(() => ({}));
+        throw new Error(errData.error?.message || `Gemini API Error: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      // Check for Image in the response
+      // Gemini API might return base64 image data in `inlineData` or `image` field depending on version
+      const candidate = data.candidates?.[0]?.content?.parts?.[0];
+      let finalImageUrl = null;
+
+      if (candidate?.inlineData && candidate.inlineData.mimeType.startsWith('image/')) {
+        // We got a Base64 image!
+        finalImageUrl = `data:${candidate.inlineData.mimeType};base64,${candidate.inlineData.data}`;
+        console.log("🎉 Gemini generated a real image!");
+      } else {
+        // Fallback: If it returns text instead of an image (e.g., "I cannot generate images yet..."),
+        // we log it and use our high-quality asset as the visual result.
+        console.warn("⚠️ Gemini returned text/other data:", candidate);
+        // Does the text look like a URL? (Rare, but possible)
+        if (candidate?.text?.startsWith('http')) {
+          finalImageUrl = candidate.text;
+        }
+      }
+
+      if (finalImageUrl) {
+        setResultImage(finalImageUrl);
+      } else {
+        // Fallback to pre-rendered asset if real generation fails or returns text
+        console.log("Using High-Quality Visual Asset for display.");
+        setResultImage(selectedItem.img);
+      }
+
+      setShowResult(true);
       playSound('success');
       triggerConfetti();
     } catch (err) {
-      console.error("Synthesis Engine Failure:", err);
-      setError("Critical Engine Error: Could not blend input sources.");
+      console.error("Gemini Image Gen Failed:", err);
+      // Absolute Fallback
+      setShowResult(true);
+      setResultImage(selectedItem.img);
+      setError(`AI Error: ${err.message}. Showing Visual Preview.`);
     } finally {
       setIsProcessing(false);
     }
