@@ -61,18 +61,11 @@ export default async function handler(req, res) {
         }
 
         // [Step 2: Image Generation]
-        // Now use the detailed prompt to generate the new image
-        console.log("🎨 Step 2: Generating Image...");
-        // NOTE: Ensure we use a model capable of image generation. 
-        // If 'gemini-2.5-flash-image' was a hallucinated name that worked by luck (mapping to imagen), 
-        // we should try 'gemini-1.5-flash' (if enabled for imagen) or 'imagen-3.0-generate-001' via vertex.
-        // However, for AI Studio API, 'gemini-1.5-flash-8b' or similar often routes correctly. 
-        // Let's stick to what partially worked or standard 'gemini-1.5-pro' with tools if available.
-        // Retrying the model string that yielded results purely for text.
+        // Using USER'S CHOICE: gemini-2.5-flash-image
+        // We feed it the 'Description' from Step 1, so it draws the right face without crashing on image input.
+        console.log("🎨 Step 2: Generating Image with gemini-2.5-flash-image...");
 
-        const genModel = "gemini-2.0-flash-exp"; // Trying a newer experimental model which often has image gen capabilities enabled in beta
-        // Or fallback to the previous one if 2.0 fails. Let's try to be robust. 
-
+        const genModel = "gemini-2.5-flash-image";
         const genUrl = `https://generativelanguage.googleapis.com/v1beta/models/${genModel}:generateContent?key=${apiKey}`;
 
         const genResponse = await fetch(genUrl, {
@@ -80,7 +73,7 @@ export default async function handler(req, res) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 contents: [{
-                    parts: [{ text: `Generate an image: ${finalPrompt}` }]
+                    parts: [{ text: `Create a highly detailed 2D vector art image. ${finalPrompt}` }]
                 }],
                 generationConfig: {
                     temperature: 0.4
