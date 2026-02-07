@@ -50,6 +50,10 @@ export default function App() {
   const [resultImage, setResultImage] = useState(null);
   const [error, setError] = useState(null);
 
+  // Runtime API Key State (For deployed environments)
+  const [userApiKey, setUserApiKey] = useState(localStorage.getItem('gemini_key') || '');
+  const [showKeyInput, setShowKeyInput] = useState(false);
+
   // Derived state
   const selectedItemObj = ASSETS.items.find(i => i.id === selectedItemId);
 
@@ -118,12 +122,20 @@ export default function App() {
 
     try {
       // [Google AI Studio (Gemini 2.5 Flash Image) Integration]
-      const apiKey = import.meta.env.VITE_NANOBANANA_API_KEY;
-      // Using the latest and greatest model as requested
+      // Priority: 1. User Input Key (Runtime) -> 2. Env Var (Build time)
+      const envKey = import.meta.env.VITE_NANOBANANA_API_KEY;
+      const apiKey = userApiKey || envKey;
+
       const model = "gemini-2.5-flash-image";
 
       if (!apiKey) {
-        throw new Error("Missing API Key. Please ensure VITE_NANOBANANA_API_KEY is in your .env file.");
+        setShowKeyInput(true); // Open the key input modal
+        throw new Error("API Key required. Please enter it in the settings.");
+      }
+
+      // Save valid key to local storage for convenience
+      if (userApiKey) {
+        localStorage.setItem('gemini_key', userApiKey);
       }
 
       console.log(`🚀 Contacting Google AI Studio (${model})...`);
@@ -232,7 +244,26 @@ export default function App() {
         <header>
           <h1 className="game-title">✨ AI Magic Dress Up ✨</h1>
           <p className="subtitle">Choose a model and an item to generate a NEW AI character!</p>
+          <button
+            className="key-settings-btn"
+            onClick={() => setShowKeyInput(!showKeyInput)}
+            title="Set API Key"
+          >
+            🔑
+          </button>
         </header>
+
+        {showKeyInput && (
+          <div className="key-input-panel">
+            <input
+              type="password"
+              placeholder="Paste Google AI Studio Key Here"
+              value={userApiKey}
+              onChange={(e) => setUserApiKey(e.target.value)}
+            />
+            <button onClick={() => setShowKeyInput(false)}>Save</button>
+          </div>
+        )}
 
         <AnimatePresence mode="wait">
           {!showResult ? (

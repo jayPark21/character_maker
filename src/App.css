@@ -395,3 +395,43 @@ body {
   background: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(2px);
 }
+
+.key-settings-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+.key-settings-btn:hover {
+  opacity: 1;
+}
+
+.key-input-panel {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.key-input-panel input {
+  padding: 8px 15px;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  width: 250px;
+}
+
+.key-input-panel button {
+  background: var(--secondary);
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+}
