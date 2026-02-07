@@ -26,13 +26,11 @@ export default async function handler(req, res) {
         let finalPrompt = prompt;
 
         // [Step 1: Vision Analysis]
-        // If an image is provided, we first ask Gemini 1.5 Flash to analyze it and extract visual traits.
-        // This acts as a "Bridge" for Image-to-Image generation 
-        // since the generation endpoint might not accept direct image input yet.
+        // Even if we use 2.5 for generation, using 1.5-Flash for analysis helps refine the prompt greatly.
         if (image) {
             console.log("👁️ Step 1: Analyzing Reference Image (Vision)...");
 
-            const visionModel = "gemini-1.5-flash"; // Good at seeing things
+            const visionModel = "gemini-1.5-flash";
             const visionUrl = `https://generativelanguage.googleapis.com/v1beta/models/${visionModel}:generateContent?key=${apiKey}`;
 
             const visionResponse = await fetch(visionUrl, {
@@ -41,7 +39,7 @@ export default async function handler(req, res) {
                 body: JSON.stringify({
                     contents: [{
                         parts: [
-                            { text: "Describe this character's physical appearance in extreme detail for an artist to recreate. Focus on hair color, hairstyles (pigtails?), eye shape, face shape, and art style involved (chibi? vector?). Do not describe the clothing. Just the body and head." },
+                            { text: "Describe this character's physical appearance in extreme detail. Focus on hair color, hairstyles, eye shape, face shape, and art style. Do not describe the clothing. Just the body and head." },
                             { inlineData: { mimeType: "image/png", data: image } }
                         ]
                     }]
@@ -53,28 +51,35 @@ export default async function handler(req, res) {
 
             if (description) {
                 console.log("✅ Analysis Complete:", description.substring(0, 50) + "...");
-                // Combine the extracted identity with the user's clothing request
+                // Add description to prompt
                 finalPrompt = `Character Description: ${description}. \n\n Request: Draw this exact character wearing [${prompt}]. Maintain the face/hair/style exactly as described. High quality, 2D vector art, white background.`;
-            } else {
-                console.warn("⚠️ Vision analysis failed, falling back to original prompt.");
             }
         }
 
-        // [Step 2: Image Generation]
-        // Using USER'S CHOICE: gemini-2.5-flash-image
-        // We feed it the 'Description' from Step 1, so it draws the right face without crashing on image input.
-        console.log("🎨 Step 2: Generating Image with gemini-2.5-flash-image...");
+        // [Step 2: Image Generation - USER COMMAND: gemini-2.5-flash-image]
+        console.log("🎨 Step 2: Generating with Gemini 2.5 Flash Image...");
 
         const genModel = "gemini-2.5-flash-image";
         const genUrl = `https://generativelanguage.googleapis.com/v1beta/models/${genModel}:generateContent?key=${apiKey}`;
+
+        // Payload: Text + Image (Base64)
+        const parts = [];
+        parts.push({ text: `Task: Character Editing. \nInput Image: (Attached). \nInstruction: ${finalPrompt}` });
+
+        if (image) {
+            parts.push({
+                inlineData: {
+                    mimeType: "image/png",
+                    data: image
+                }
+            });
+        }
 
         const genResponse = await fetch(genUrl, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                contents: [{
-                    parts: [{ text: `Create a highly detailed 2D vector art image. ${finalPrompt}` }]
-                }],
+                contents: [{ parts: parts }],
                 generationConfig: {
                     temperature: 0.4
                 },
@@ -88,12 +93,12 @@ export default async function handler(req, res) {
         });
 
         if (!genResponse.ok) {
-            throw new Error(`Gen API Error: ${genResponse.status}`);
+            const errData = await genResponse.json().catch(() => ({}));
+            // If 422, it means model doesn't support image input.
+            throw new Error(`Gen API Error: ${genResponse.status} - ${errData.error?.message || 'Unknown'}`);
         }
 
         const data = await genResponse.json();
-
-        // Extract Image
         const candidate = data.candidates?.[0]?.content?.parts?.[0];
         let finalImageUrl = null;
 
@@ -106,7 +111,6 @@ export default async function handler(req, res) {
         if (finalImageUrl) {
             return res.status(200).json({ success: true, imageUrl: finalImageUrl });
         } else {
-            // If text returned ("I cannot draw..."), pass it as error
             return res.status(422).json({ success: false, error: "AI Refused: " + (candidate?.text || "No image") });
         }
 

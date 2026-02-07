@@ -70,30 +70,28 @@ export default function App() {
 
     try {
       // 1. Load Base Image (Character)
-      // We need to send the actual image data to the server for "Image-to-Image" analysis
+      // Attempting Direct Image-to-Image with specialized prompt
       const baseImgResponse = await fetch(ASSETS.characterBase);
       const baseBlob = await baseImgResponse.blob();
 
-      // Convert Blob to Base64
       const reader = new FileReader();
       const base64Promise = new Promise((resolve) => {
         reader.onloadend = () => {
-          const base64data = reader.result.split(',')[1]; // Remove header
+          const base64data = reader.result.split(',')[1];
           resolve(base64data);
         };
       });
       reader.readAsDataURL(baseBlob);
       const base64Image = await base64Promise;
 
-      // [Vercel Serverless Function Call]
-      console.log("🚀 Requesting Vercel Function with Base Image...");
+      console.log("🚀 Requesting Vercel Function with Base Image for Gemini 1.5 Pro...");
 
       const response = await fetch('/api/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           prompt: selectedItem.prompt,
-          image: base64Image // Sending the base character image is CRITICAL!
+          image: base64Image // Must send image!
         })
       });
 
