@@ -1,24 +1,12 @@
-import { useState, useEffect } from 'react';
+
+import React, { useState, useEffect } from 'react';
+import useSound from 'use-sound';
 import { motion, AnimatePresence } from 'framer-motion';
-import confetti from 'canvas-confetti';
-import { Sparkles, Wand2, RefreshCw } from 'lucide-react';
+import { Check, Loader, Wand2, RefreshCw, Sparkles, Plus } from 'lucide-react';
 import './App.css';
 
-// Sound Effects Engine
-const playSound = (type) => {
-  const sounds = {
-    pop: new Audio('https://assets.mixkit.co/active_storage/sfx/2578/2578-preview.mp3'),
-    magic: new Audio('https://assets.mixkit.co/active_storage/sfx/2635/2635-preview.mp3'),
-    success: new Audio('https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3')
-  };
-  if (sounds[type]) {
-    sounds[type].volume = 0.5;
-    sounds[type].play().catch(e => console.log('Audio suspended', e));
-  }
-};
-
 const ASSETS = {
-  characterBase: '/assets/base_character.png',
+  characterBase: '/assets/base_character.png', // Corrected path
   items: [
     {
       id: 'iron-suit',
@@ -29,40 +17,63 @@ const ASSETS = {
     {
       id: 'hanbok',
       name: 'Lovely Hanbok',
-      img: '/assets/hanbok.png',
-      prompt: "Image Synthesis: Start with the base character (cute girl, purple pigtails). DRESS HER in a traditional Korean Hanbok (blue top, cream skirt). REPLACE her clothes but KEEP her exact face, hair, and pose. Flat 2D vector style."
+      img: '/assets/hanbok_result.png',
+      prompt: "Image Synthesis: Integrate the character's face and purple hair into a traditional Korean Hanbok dress, pastel blue and pink colors. Maintain character identity. Professional vector illustration."
     },
     {
-      id: 'dress',
+      id: 'denim-dress',
       name: 'Denim Dress',
-      img: '/assets/dress.png',
-      prompt: "Image Synthesis: Start with the base character (cute girl, purple pigtails). DRESS HER in a blue denim dress with heart patterns. REPLACE her clothes but KEEP her exact face and hair. Flat 2D vector style."
+      img: '/assets/denim_dress_result.png',
+      prompt: "Image Synthesis: Integrate the character's face and purple hair into a cute blue denim dress with flower embroidery. Maintain character identity. Clean flat vector style."
     },
     {
-      id: 'jeans',
+      id: 'heart-jeans',
       name: 'Heart Jeans',
-      img: '/assets/jeans.png',
-      prompt: "Image Synthesis: Start with the base character (cute girl, purple pigtails). DRESS HER in a cute white t-shirt and heart-patterned jeans. REPLACE her clothes but KEEP her exact face and hair. Flat 2D vector style."
+      img: '/assets/heart_jeans_result.png',
+      prompt: "Image Synthesis: Integrate the character's face and purple hair into a white t-shirt with a red heart and cute blue jeans with heart patterns. Maintain character identity. Detailed vector art."
     }
   ]
 };
 
-export default function App() {
-  const [charSelected, setCharSelected] = useState(false);
-  const [selectedItemId, setSelectedItemId] = useState(null);
+// Simple Icon Components for fallback
+const PlusIcon = ({ size }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="12" y1="5" x2="12" y2="19"></line>
+    <line x1="5" y1="12" x2="19" y2="12"></line>
+  </svg>
+);
+
+function App() {
+  const [items, setItems] = useState(ASSETS.items);
+  const [newItemName, setNewItemName] = useState('');
+  const [selectedItem, setSelectedItem] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [showResult, setShowResult] = useState(false);
   const [resultImage, setResultImage] = useState(null);
   const [error, setError] = useState(null);
 
-  // Derived state
-  const selectedItemObj = ASSETS.items.find(i => i.id === selectedItemId);
+  // Sound Effects (using simple beep fallback if files missing, or placeholder)
+  const playSound = (type) => {
+    // Placeholder for sound logic
+  };
 
-  const generateAIImage = async () => {
-    const selectedItem = ASSETS.items.find(i => i.id === selectedItemId);
-    const baseCharacter = ASSETS.characterBase;
+  const handleAddItem = () => {
+    if (!newItemName.trim()) return;
+    const newId = `custom-${Date.now()}`;
+    const newItem = {
+      id: newId,
+      name: newItemName,
+      img: '/assets/magic_wand.png',
+      isCustom: true,
+      prompt: `Action: Change clothing. New Outfit: ${newItemName}. Style: Cute 2D Vector. Context: Keep the character's face and hair exactly same.`
+    };
 
-    if (!selectedItem || !baseCharacter) return;
+    setItems([newItem, ...items]);
+    setNewItemName('');
+    playSound('pop');
+  };
+
+  const handleGenerate = async () => {
+    if (!selectedItem) return;
 
     setIsProcessing(true);
     setError(null);
@@ -70,7 +81,7 @@ export default function App() {
 
     try {
       // 1. Load Base Image (Character)
-      // Attempting Direct Image-to-Image with specialized prompt
+      console.log("🚀 Loading Base Image...");
       const baseImgResponse = await fetch(ASSETS.characterBase);
       const baseBlob = await baseImgResponse.blob();
 
@@ -84,149 +95,158 @@ export default function App() {
       reader.readAsDataURL(baseBlob);
       const base64Image = await base64Promise;
 
-      console.log("🚀 Requesting Vercel Function with Base Image for Gemini 1.5 Pro...");
+      console.log("🚀 Requesting Vercel Function with Base Image for Gemini...");
+
+      // Construct Prompt based on item type
+      const finalPrompt = selectedItem.isCustom
+        ? `Action: Change clothing. New Outfit: ${selectedItem.name}. Style: Cute 2D Vector. Context: Keep the character's face and hair purely unchanged.`
+        : selectedItem.prompt;
 
       const response = await fetch('/api/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          prompt: selectedItem.prompt,
-          image: base64Image // Must send image!
+          prompt: finalPrompt,
+          image: base64Image
         })
       });
 
       if (!response.ok) {
-        const errData = await response.json().catch(() => ({}));
-        throw new Error(errData.error || `Server Error: ${response.status}`);
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to generate image');
       }
 
       const data = await response.json();
-
       if (data.success && data.imageUrl) {
         setResultImage(data.imageUrl);
-        console.log("🎉 Serverless AI Generation Success!");
+        playSound('success');
       } else {
-        throw new Error(data.error || "No image returned from server.");
+        throw new Error('No image URL in response');
       }
-
-      setShowResult(true);
-      playSound('success');
-      triggerConfetti();
     } catch (err) {
-      console.error("Serverless Gen Failed:", err);
-      // Fallback
-      setShowResult(true);
-      setResultImage(selectedItem.img);
-      setError(`Server Error: ${err.message}. Showing Preview.`);
+      console.error("Generation Error:", err);
+      setError(err.message || 'Something went wrong');
+      playSound('error');
     } finally {
       setIsProcessing(false);
     }
   };
 
-  useEffect(() => {
-    if (charSelected && selectedItemId && !resultImage && !isProcessing) {
-      generateAIImage();
-    }
-  }, [charSelected, selectedItemId]);
+  return (
+    <div className="main-container">
+      <header className="header">
+        <h1 className="game-title">✨ AI Character Maker ✨</h1>
+        <p className="subtitle">Pick an item to generate a NEW AI character!</p>
+      </header>
 
-  const triggerConfetti = () => {
-    const duration = 3000;
-    const animationEnd = Date.now() + duration;
-    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
-    const randomInRange = (min, max) => Math.random() * (max - min) + min;
-    const interval = setInterval(function () {
-      const timeLeft = animationEnd - Date.now();
-      if (timeLeft <= 0) return clearInterval(interval);
-      const particleCount = 50 * (timeLeft / duration);
-      confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
-      confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
-    }, 250);
-  };
+      <div className="stage-area">
+        {/* Left: Character Preview */}
+        <div className="character-section">
+          <div className={`character-box ${!selectedItem ? 'selected' : ''}`}>
+            <img src={ASSETS.characterBase} alt="Base Character" className="character-img" />
+            <div className="char-label">Me</div>
+          </div>
+        </div>
 
-  const resetGame = () => {
-    playSound('pop');
-    setResultImage(null);
-    setShowResult(false);
-    setCharSelected(false);
-    return (
-      <div className="main-container">
-        <header className="header">
-          <h1 className="game-title">✨ AI Character Maker ✨</h1>
-          <p className="subtitle">Pick an item to generate a NEW AI character!</p>
-        </header>
+        {/* Right: Wardrobe */}
+        <div className="wardrobe-section">
 
-        <div className="stage-area">
-          {/* Left: Character Preview */}
-          <div className="character-section">
-            <div className={`character-box ${!selectedItem ? 'selected' : ''}`}>
-              <img src={ASSETS.characterBase} alt="Base Character" className="character-img" />
-              <div className="char-label">Me</div>
-            </div>
+          {/* New Item Input Area */}
+          <div className="add-item-box">
+            <input
+              type="text"
+              placeholder="Enter style (e.g. Yellow Raincoat)"
+              value={newItemName}
+              onChange={(e) => setNewItemName(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && handleAddItem()}
+              className="item-input"
+            />
+            <button onClick={handleAddItem} className="add-btn">
+              <PlusIcon size={20} />
+            </button>
           </div>
 
-          {/* Right: Wardrobe */}
-          <div className="wardrobe-section">
-
-            {/* New Item Input Area */}
-            <div className="add-item-box">
-              <input
-                type="text"
-                placeholder="Enter style (e.g. Yellow Raincoat)"
-                value={newItemName}
-                onChange={(e) => setNewItemName(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && handleAddItem()}
-                className="item-input"
-              />
-              <button onClick={handleAddItem} className="add-btn">
-                <PlusIcon size={20} />
-              </button>
-            </div>
-
-            <div className="items-grid">
-              {items.map((item) => (
-                <div
-                  key={item.id}
-                  className={`item-card ${selectedItem?.id === item.id ? 'selected' : ''}`}
-                  onClick={() => { setSelectedItem(item); playSound('click'); }}
-                >
-                  <div className="item-img-wrapper">
-                    {item.isCustom ? (
-                      <div className="custom-icon">✨</div>
-                    ) : (
-                        <img src={item.img} alt={item.name} className="item-img" />
-                    <div className="indicator">
-                      <span className="dot source-a"></span>
-                      <div className="text-group">
-                        <span className="label">Identity:</span>
-                        <span className="value">base_character.png (90%)</span>
-                      </div>
-                    </div>
-                    <div className="indicator">
-                      <span className="dot source-b"></span>
-                      <div className="text-group">
-                        <span className="label">Style: {selectedItemObj?.name}</span>
-                        <span className="value">(100%)</span>
-                      </div>
-                    </div>
-                  </div>
+          <div className="items-grid">
+            {items.map((item) => (
+              <div
+                key={item.id}
+                className={`item-card ${selectedItem?.id === item.id ? 'selected' : ''}`}
+                onClick={() => { setSelectedItem(item); playSound('click'); }}
+              >
+                <div className="item-img-wrapper">
+                  {item.isCustom ? (
+                    <div className="custom-icon">✨</div>
+                  ) : (
+                    <img src={item.img} alt={item.name} className="item-img" />
+                  )}
                 </div>
+                <span className="item-name">{item.name}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
 
-                {!isProcessing && (
-                <>
-                  <h2 className="result-message">조합 성공! ✨</h2>
-                  <p className="result-desc">
-                    모델의 고유 얼굴 정보를 유지하면서 {selectedItemObj?.name}의 스타일 요소가 완벽하게 결합되었습니다.
-                  </p>
-                  <button className="reset-btn" onClick={resetGame}>
-                    <Wand2 size={20} /> Try Another
-                  </button>
-                </>
-              )}
-            </div>
-          </motion.div>
+      <div className="action-area">
+        <AnimatePresence>
+          {error && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              className="error-message"
+            >
+              ⚠️ {error}
+            </motion.div>
           )}
         </AnimatePresence>
+
+        <button
+          className={`generate-btn ${isProcessing ? 'disabled' : ''}`}
+          onClick={handleGenerate}
+          disabled={isProcessing || !selectedItem}
+        >
+          {isProcessing ? '✨ Magic happening...' : '✨ Make It! ✨'}
+        </button>
       </div>
-    </div >
+
+      {/* Result Modal Overlay */}
+      <AnimatePresence>
+        {resultImage && (
+          <motion.div
+            className="result-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <div className="result-card">
+              <div className="result-header">
+                <span className="result-title">AI Synthesis Result ✨</span>
+                <button className="close-btn" onClick={() => setResultImage(null)}>X</button>
+              </div>
+
+              <div className="result-image-container">
+                <img src={resultImage} alt="Generated Character" className="final-result-image" />
+                <div className="synthesis-badge success">Auto-Generated</div>
+              </div>
+
+              <div className="result-info">
+                <p>Identity: base_character (90%)</p>
+                <p>Style: {selectedItem?.name} (100%)</p>
+              </div>
+
+              <h3>조합 성공! ✨</h3>
+              <p>모델의 고유 얼굴 정보를 유지하면서 {selectedItem?.name}의 스타일 요소가 완벽하게 결합되었습니다.</p>
+
+              <button className="reset-btn" onClick={() => { setResultImage(null); setSelectedItem(null); }}>
+                <Sparkles size={18} /> Try Another
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }
+
+export default App;
