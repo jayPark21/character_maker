@@ -1,0 +1,41 @@
+> [debug] [2026-02-07T10:43:10.271Z] Found config in file "C:\Users\nurik\인형만들기\vercel.json"
+Vercel CLI 50.13.2
+> [debug] [2026-02-07T10:43:10.278Z] user supplied known subcommand: "deploy"
+> [debug] [2026-02-07T10:43:10.318Z] Setting target to production
+> [debug] [2026-02-07T10:43:10.319Z] Arrived at home directory
+> [debug] [2026-02-07T10:43:10.434Z] Found git root via "git rev-parse --show-toplevel" - detected "C:/Users/nurik/인형만들기" as repo root
+> [debug] [2026-02-07T10:43:10.436Z] Spinner invoked (Loading scopes…) with a 1000ms delay
+> [debug] [2026-02-07T10:43:10.438Z] Valid access token, skipping token refresh.
+> [debug] [2026-02-07T10:43:10.439Z] Valid access token, skipping token refresh.
+> [debug] [2026-02-07T10:43:10.466Z] #1 → GET https://api.vercel.com/v2/user
+> [debug] [2026-02-07T10:43:10.470Z] #2 → GET https://api.vercel.com/v1/teams
+> [debug] [2026-02-07T10:43:11.065Z] #1 ← 200 OK: sfo1::v4shr-1770460990392-ce25813f526c [599ms]
+> [debug] [2026-02-07T10:43:11.189Z] #2 ← 200 OK: sfo1::ghsxr-1770460990404-7c2945b06e46 [719ms]
+> [debug] [2026-02-07T10:43:11.197Z] Spinner invoked (Searching for existing projects…) with a 1000ms delay
+> [debug] [2026-02-07T10:43:11.198Z] Valid access token, skipping token refresh.
+> [debug] [2026-02-07T10:43:11.198Z] Valid access token, skipping token refresh.
+> [debug] [2026-02-07T10:43:11.199Z] #3 → GET https://api.vercel.com/v9/projects/%EC%9D%B8%ED%98%95%EB%A7%8C%EB%93%A4%EA%B8%B0?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+> [debug] [2026-02-07T10:43:11.200Z] #4 → GET https://api.vercel.com/v9/projects/?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+> [debug] [2026-02-07T10:43:11.610Z] #3 ← 404 Not Found: sfo1::ghsxr-1770460990821-d43bc2d3a65c [411ms]
+> [debug] [2026-02-07T10:43:11.708Z] #4 ← 200 OK: sfo1::v4shr-1770460990817-1df5938e5617 [508ms]
+> [debug] [2026-02-07T10:43:11.733Z] Valid access token, skipping token refresh.
+> [debug] [2026-02-07T10:43:11.734Z] #5 → GET https://api.vercel.com/v2/user
+> [debug] [2026-02-07T10:43:12.014Z] #5 ← 200 OK: sfo1::v4shr-1770460991350-a2ae151849dc [280ms]
+> [debug] [2026-02-07T10:43:12.014Z] Valid access token, skipping token refresh.
+> [debug] [2026-02-07T10:43:12.015Z] #6 → GET https://api.vercel.com/teams/team_hGo4pELMiCNyjQ0ncZVDGjF4
+> [debug] [2026-02-07T10:43:12.291Z] #6 ← 200 OK: sfo1::v4shr-1770460991631-8b77e6b936fd [276ms]
+Error: An unexpected error occurred in deploy: Error: Detected linked project does not have "id".
+> [debug] [2026-02-07T10:43:12.302Z] Spawning C:\Users\nurik\AppData\Roaming\npm\node_modules\vercel\dist\get-latest-worker.cjs
+> '[debug] [2026-02-07T10:43:12.409Z] Notifying parent we're ready
+> '[debug] [2026-02-07T10:43:12.415Z] Received message from parent: {
+  cacheFile: 'C:\\Users\\nurik\\AppData\\Local\\com.vercel.cli\\Cache\\package-updates\\vercel-latest.json',
+  distTag: 'latest',
+  name: 'vercel',
+  updateCheckInterval: 86400000
+}
+> '[debug] [2026-02-07T10:43:12.415Z] Disconnecting from parent
+> '[debug] [2026-02-07T10:43:12.420Z] Checking lock file: C:\Users\nurik\AppData\Local\com.vercel.cli\Cache\package-updates\vercel-latest.lock
+> '[debug] [2026-02-07T10:43:12.424Z] Found lock file with pid: 31588
+> '[debug] [2026-02-07T10:43:12.424Z] Resetting lock file: Error: kill ESRCH
+> '[debug] [2026-02-07T10:43:12.425Z] Initializing lock file with pid 25220
+> '[debug] [2026-02-07T10:43:12.430Z] Fetching https://registry.npmjs.org/-/package/vercel/dist-tags

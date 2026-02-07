@@ -1,0 +1,6 @@
+> [debug] [2026-02-07T10:43:41.516Z] Found config in file "C:\Users\nurik\인형만들기\vercel.json"
+Vercel CLI 50.13.2
+> [debug] [2026-02-07T10:43:41.527Z] user supplied no target, defaulting to deploy
+> [debug] [2026-02-07T10:43:41.575Z] Arrived at home directory
+> [debug] [2026-02-07T10:43:41.705Z] Found git root via "git rev-parse --show-toplevel" - detected "C:/Users/nurik/인형만들기" as repo root
+? Set up and deploy “~\인형만들기”? (Y/n)[43G

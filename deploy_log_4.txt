@@ -1,0 +1,242 @@
+> [debug] [2026-02-07T10:45:22.508Z] Found config in file "C:\Users\nurik\인형만들기\doll-maker-sub\vercel.json"
+Vercel CLI 50.13.2
+> [debug] [2026-02-07T10:45:22.516Z] user supplied known subcommand: "deploy"
+> [debug] [2026-02-07T10:45:22.552Z] Setting target to production
+> [debug] [2026-02-07T10:45:22.553Z] Arrived at home directory
+> [debug] [2026-02-07T10:45:22.660Z] Found git root via "git rev-parse --show-toplevel" - detected "C:/Users/nurik/인형만들기" as repo root
+> [debug] [2026-02-07T10:45:22.662Z] Spinner invoked (Loading scopes…) with a 1000ms delay
+> [debug] [2026-02-07T10:45:22.663Z] Valid access token, skipping token refresh.
+> [debug] [2026-02-07T10:45:22.664Z] Valid access token, skipping token refresh.
+> [debug] [2026-02-07T10:45:22.686Z] #1 → GET https://api.vercel.com/v2/user
+> [debug] [2026-02-07T10:45:22.689Z] #2 → GET https://api.vercel.com/v1/teams
+> [debug] [2026-02-07T10:45:23.271Z] #1 ← 200 OK: sfo1::tz8bc-1770461122604-ef29511e544b [585ms]
+> [debug] [2026-02-07T10:45:23.429Z] #2 ← 200 OK: sfo1::5qbv5-1770461122592-2ac399b9ca36 [740ms]
+> [debug] [2026-02-07T10:45:23.433Z] Spinner invoked (Searching for existing projects…) with a 1000ms delay
+> [debug] [2026-02-07T10:45:23.434Z] Valid access token, skipping token refresh.
+> [debug] [2026-02-07T10:45:23.434Z] #3 → GET https://api.vercel.com/v9/projects/doll-maker-sub?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+> [debug] [2026-02-07T10:45:23.855Z] #3 ← 404 Not Found: sfo1::5qbv5-1770461123051-f98d77321ff5 [421ms]
+> Auto-detected Project Settings for Vite
+
+> [debug] [2026-02-07T10:45:23.879Z] Valid access token, skipping token refresh.
+> [debug] [2026-02-07T10:45:23.879Z] #4 → POST https://api.vercel.com/v1/projects?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+> [debug] [2026-02-07T10:45:24.754Z] #4 ← 200 OK: sfo1::5qbv5-1770461123497-7ed5bc340056 [874ms]
+> [debug] [2026-02-07T10:45:24.756Z] Arrived at home directory
+> [debug] [2026-02-07T10:45:24.868Z] Found git root via "git rev-parse --show-toplevel" - detected "C:/Users/nurik/인형만들기" as repo root
+Linked to asadalls-projects/doll-maker-sub (created .vercel and added it to .gitignore)
+> [debug] [2026-02-07T10:45:24.877Z] Error while parsing repo data: ENOENT: no such file or directory, open 'C:\Users\nurik\인형만들기\doll-maker-sub\.git\config'
+> [debug] [2026-02-07T10:45:24.878Z] Error while parsing repo data: ENOENT: no such file or directory, open 'C:\Users\nurik\인형만들기\doll-maker-sub\.git\config'
+> [debug] [2026-02-07T10:45:25.163Z] Spinner invoked (Deploying asadalls-projects/doll-maker-sub) with a 0ms delay
+[client-debug] 2026-02-07T10:45:25.164Z Creating deployment...
+[client-debug] 2026-02-07T10:45:25.164Z Provided 'path' is a directory.
+[client-debug] 2026-02-07T10:45:25.168Z Found 26 rules in .vercelignore
+[client-debug] 2026-02-07T10:45:25.168Z Building file tree...
+[client-debug] 2026-02-07T10:45:25.174Z Found 25 files in the specified directory
+[client-debug] 2026-02-07T10:45:25.180Z Yielding a 'hashes-calculated' event with 25 hashes
+> [debug] [2026-02-07T10:45:25.180Z] Valid access token, skipping token refresh.
+> [debug] [2026-02-07T10:45:25.181Z] #5 → GET https://api.vercel.com/v9/projects/doll-maker-sub?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+> [debug] [2026-02-07T10:45:25.648Z] #5 ← 200 OK: sfo1::5qbv5-1770461124799-c7808d7287e8 [467ms]
+[client-debug] 2026-02-07T10:45:25.650Z Using provided API URL: https://api.vercel.com
+[client-debug] 2026-02-07T10:45:25.650Z Using provided user agent: vercel 50.13.2 node-v22.22.0 win32 (x64)
+[client-debug] 2026-02-07T10:45:25.650Z Setting platform version to harcoded value 2
+[client-debug] 2026-02-07T10:45:25.650Z Creating the deployment and starting upload...
+[client-debug] 2026-02-07T10:45:25.651Z Determining necessary files for upload...
+[client-debug] 2026-02-07T10:45:25.651Z Creating deployment
+[client-debug] 2026-02-07T10:45:25.652Z Sending deployment creation API request
+[client-debug] 2026-02-07T10:45:26.632Z Deployment response: {"error":{"code":"missing_files","message":"Missing files","missing":["03e755154d26d2cf8ac23dd197e464b11d79d89d","0856bc5ad562c8877c4f00da8119c94412b70a1f","17607e41dab0beff568cb01609cf2fb525572fa6","2f17a31e7f7e8aa5639b7da2f59a3afb97ff4262","40fd6d4004435c0d385e250f19a4157a18b2e51f","515a19bf98ac11c43f3e34b81248d781fa45df36","566427971ba2fd7cdbf69cc1b6e4e2e2ce7f12b1","58d16f48f95b50313ca439a62183b174409e6b5b","63288c8bafe61bfef9b53a15986bfe93fc01988e","67b8c20be51bc79bf5ba81b1ff4f9988c42b6fe3","683b3a34d1a247031368ed85a36bcef957caebe0","6b879e36ac26455ecfc8d8fbb73bbc6c27c70c15","81da54311f35e9428563b2424deec3b6e0422295","8ea9037144b3ed65b55843017a1964ac8502eea0","8ed7b7aa5228e4959fcc7cec798fcaed8f6ea3ac","9341bd2a6ed904e3288d9abb520cb6fad896a5db","93c891e7265a01adc3ca62bf7d1cc6ca10f3c4d1","97fbad15db98a332465572e0bdb409c0f58d392e","b0de495f217a38982a6ad62583d736d0275761c5","ba910cd7ece05285fb8f23c0909d5500aaa2d66d","c929661224c3e0b63a0337488240419cf306f318"]}}
+[client-debug] 2026-02-07T10:45:26.632Z Error: Deployment request status is 400
+[client-debug] 2026-02-07T10:45:26.632Z 21 files are required to upload
+[client-debug] 2026-02-07T10:45:26.632Z Yielding a 'file-count' event
+> [debug] [2026-02-07T10:45:26.632Z] Total files 25, 21 changed
+> [debug] [2026-02-07T10:45:26.633Z] Spinner invoked (Uploading [--------------------] (0.0B/573.4KB)) with a 0ms delay
+[client-debug] 2026-02-07T10:45:26.633Z Building an upload list...
+[client-debug] 2026-02-07T10:45:26.634Z Starting upload
+[client-debug] 2026-02-07T10:45:26.634Z POST https://api.vercel.com/v2/files?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+[client-debug] 2026-02-07T10:45:26.635Z POST https://api.vercel.com/v2/files?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+[client-debug] 2026-02-07T10:45:26.635Z POST https://api.vercel.com/v2/files?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+[client-debug] 2026-02-07T10:45:26.636Z POST https://api.vercel.com/v2/files?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+[client-debug] 2026-02-07T10:45:26.637Z POST https://api.vercel.com/v2/files?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+[client-debug] 2026-02-07T10:45:26.637Z POST https://api.vercel.com/v2/files?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+[client-debug] 2026-02-07T10:45:26.637Z POST https://api.vercel.com/v2/files?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+[client-debug] 2026-02-07T10:45:26.638Z POST https://api.vercel.com/v2/files?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+[client-debug] 2026-02-07T10:45:26.638Z POST https://api.vercel.com/v2/files?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+[client-debug] 2026-02-07T10:45:26.638Z POST https://api.vercel.com/v2/files?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+[client-debug] 2026-02-07T10:45:26.639Z POST https://api.vercel.com/v2/files?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+[client-debug] 2026-02-07T10:45:26.639Z POST https://api.vercel.com/v2/files?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+[client-debug] 2026-02-07T10:45:26.639Z POST https://api.vercel.com/v2/files?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+[client-debug] 2026-02-07T10:45:26.640Z POST https://api.vercel.com/v2/files?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+[client-debug] 2026-02-07T10:45:26.640Z POST https://api.vercel.com/v2/files?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+[client-debug] 2026-02-07T10:45:26.640Z POST https://api.vercel.com/v2/files?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+[client-debug] 2026-02-07T10:45:26.640Z POST https://api.vercel.com/v2/files?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+[client-debug] 2026-02-07T10:45:26.641Z POST https://api.vercel.com/v2/files?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+[client-debug] 2026-02-07T10:45:26.641Z POST https://api.vercel.com/v2/files?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+[client-debug] 2026-02-07T10:45:26.641Z POST https://api.vercel.com/v2/files?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+[client-debug] 2026-02-07T10:45:26.641Z POST https://api.vercel.com/v2/files?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+> [debug] [2026-02-07T10:45:26.654Z] Spinner invoked (Uploading [=====---------------] (144.8KB/573.4KB)) with a 0ms delay
+> [debug] [2026-02-07T10:45:26.936Z] Spinner invoked (Uploading [==========----------] (296.8KB/573.4KB)) with a 0ms delay
+> [debug] [2026-02-07T10:45:26.940Z] Spinner invoked (Uploading [===============-----] (430.9KB/573.4KB)) with a 0ms delay
+> [debug] [2026-02-07T10:45:26.960Z] Spinner invoked (Uploading [====================] (573.4KB/573.4KB)) with a 0ms delay
+[client-debug] 2026-02-07T10:45:27.188Z DONE in 554ms: POST https://api.vercel.com/v2/files?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+[client-debug] 2026-02-07T10:45:27.188Z File 03e755154d26d2cf8ac23dd197e464b11d79d89d (C:\Users\nurik\인형만들기\doll-maker-sub\.github\workflows\deploy.yml) uploaded
+[client-debug] 2026-02-07T10:45:27.188Z Yielding a 'file-uploaded' event
+> [debug] [2026-02-07T10:45:27.188Z] Uploaded: C:\Users\nurik\인형만들기\doll-maker-sub\.github\workflows\deploy.yml (937B)
+[client-debug] 2026-02-07T10:45:27.262Z DONE in 627ms: POST https://api.vercel.com/v2/files?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+[client-debug] 2026-02-07T10:45:27.262Z File 0856bc5ad562c8877c4f00da8119c94412b70a1f (C:\Users\nurik\인형만들기\doll-maker-sub\src\index.css) uploaded
+[client-debug] 2026-02-07T10:45:27.262Z Yielding a 'file-uploaded' event
+> [debug] [2026-02-07T10:45:27.262Z] Uploaded: C:\Users\nurik\인형만들기\doll-maker-sub\src\index.css (111B)
+[client-debug] 2026-02-07T10:45:27.303Z DONE in 666ms: POST https://api.vercel.com/v2/files?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+[client-debug] 2026-02-07T10:45:27.303Z File 40fd6d4004435c0d385e250f19a4157a18b2e51f (C:\Users\nurik\인형만들기\doll-maker-sub\vercel.json) uploaded
+[client-debug] 2026-02-07T10:45:27.303Z Yielding a 'file-uploaded' event
+> [debug] [2026-02-07T10:45:27.303Z] Uploaded: C:\Users\nurik\인형만들기\doll-maker-sub\vercel.json (770B)
+[client-debug] 2026-02-07T10:45:27.304Z DONE in 668ms: POST https://api.vercel.com/v2/files?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+[client-debug] 2026-02-07T10:45:27.304Z File 17607e41dab0beff568cb01609cf2fb525572fa6 (C:\Users\nurik\인형만들기\doll-maker-sub\package.json) uploaded
+[client-debug] 2026-02-07T10:45:27.305Z Yielding a 'file-uploaded' event
+> [debug] [2026-02-07T10:45:27.305Z] Uploaded: C:\Users\nurik\인형만들기\doll-maker-sub\package.json (707B)
+[client-debug] 2026-02-07T10:45:27.310Z DONE in 674ms: POST https://api.vercel.com/v2/files?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+[client-debug] 2026-02-07T10:45:27.311Z File 2f17a31e7f7e8aa5639b7da2f59a3afb97ff4262 (C:\Users\nurik\인형만들기\doll-maker-sub\link_log.txt) uploaded
+[client-debug] 2026-02-07T10:45:27.311Z Yielding a 'file-uploaded' event
+> [debug] [2026-02-07T10:45:27.311Z] Uploaded: C:\Users\nurik\인형만들기\doll-maker-sub\link_log.txt (168B)
+[client-debug] 2026-02-07T10:45:27.325Z DONE in 684ms: POST https://api.vercel.com/v2/files?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+[client-debug] 2026-02-07T10:45:27.325Z File 97fbad15db98a332465572e0bdb409c0f58d392e (C:\Users\nurik\인형만들기\doll-maker-sub\README.md) uploaded
+[client-debug] 2026-02-07T10:45:27.325Z Yielding a 'file-uploaded' event
+> [debug] [2026-02-07T10:45:27.325Z] Uploaded: C:\Users\nurik\인형만들기\doll-maker-sub\README.md (1.18KB)
+[client-debug] 2026-02-07T10:45:27.431Z DONE in 790ms: POST https://api.vercel.com/v2/files?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+[client-debug] 2026-02-07T10:45:27.431Z File b0de495f217a38982a6ad62583d736d0275761c5 (C:\Users\nurik\인형만들기\doll-maker-sub\src\App.css) uploaded
+[client-debug] 2026-02-07T10:45:27.431Z Yielding a 'file-uploaded' event
+> [debug] [2026-02-07T10:45:27.431Z] Uploaded: C:\Users\nurik\인형만들기\doll-maker-sub\src\App.css (9.11KB)
+[client-debug] 2026-02-07T10:45:27.442Z DONE in 802ms: POST https://api.vercel.com/v2/files?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+[client-debug] 2026-02-07T10:45:27.443Z File 8ed7b7aa5228e4959fcc7cec798fcaed8f6ea3ac (C:\Users\nurik\인형만들기\doll-maker-sub\index.html) uploaded
+[client-debug] 2026-02-07T10:45:27.443Z Yielding a 'file-uploaded' event
+> [debug] [2026-02-07T10:45:27.443Z] Uploaded: C:\Users\nurik\인형만들기\doll-maker-sub\index.html (362B)
+[client-debug] 2026-02-07T10:45:27.444Z DONE in 803ms: POST https://api.vercel.com/v2/files?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+[client-debug] 2026-02-07T10:45:27.444Z File ba910cd7ece05285fb8f23c0909d5500aaa2d66d (C:\Users\nurik\인형만들기\doll-maker-sub\api\generate.js) uploaded
+[client-debug] 2026-02-07T10:45:27.444Z Yielding a 'file-uploaded' event
+> [debug] [2026-02-07T10:45:27.444Z] Uploaded: C:\Users\nurik\인형만들기\doll-maker-sub\api\generate.js (5.21KB)
+[client-debug] 2026-02-07T10:45:27.445Z DONE in 805ms: POST https://api.vercel.com/v2/files?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+[client-debug] 2026-02-07T10:45:27.445Z File 8ea9037144b3ed65b55843017a1964ac8502eea0 (C:\Users\nurik\인형만들기\doll-maker-sub\public\assets\dress.png) uploaded
+[client-debug] 2026-02-07T10:45:27.445Z Yielding a 'file-uploaded' event
+> [debug] [2026-02-07T10:45:27.445Z] Uploaded: C:\Users\nurik\인형만들기\doll-maker-sub\public\assets\dress.png (45.77KB)
+[client-debug] 2026-02-07T10:45:27.452Z DONE in 813ms: POST https://api.vercel.com/v2/files?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+[client-debug] 2026-02-07T10:45:27.452Z File 81da54311f35e9428563b2424deec3b6e0422295 (C:\Users\nurik\인형만들기\doll-maker-sub\vite.config.js) uploaded
+[client-debug] 2026-02-07T10:45:27.452Z Yielding a 'file-uploaded' event
+> [debug] [2026-02-07T10:45:27.452Z] Uploaded: C:\Users\nurik\인형만들기\doll-maker-sub\vite.config.js (487B)
+[client-debug] 2026-02-07T10:45:27.454Z DONE in 813ms: POST https://api.vercel.com/v2/files?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+[client-debug] 2026-02-07T10:45:27.454Z File c929661224c3e0b63a0337488240419cf306f318 (C:\Users\nurik\인형만들기\doll-maker-sub\deploy_log.txt) uploaded
+[client-debug] 2026-02-07T10:45:27.454Z Yielding a 'file-uploaded' event
+> [debug] [2026-02-07T10:45:27.454Z] Uploaded: C:\Users\nurik\인형만들기\doll-maker-sub\deploy_log.txt (3.39KB)
+[client-debug] 2026-02-07T10:45:27.459Z DONE in 822ms: POST https://api.vercel.com/v2/files?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+[client-debug] 2026-02-07T10:45:27.459Z File 515a19bf98ac11c43f3e34b81248d781fa45df36 (C:\Users\nurik\인형만들기\doll-maker-sub\deploy_log_2.txt) uploaded
+[client-debug] 2026-02-07T10:45:27.459Z Yielding a 'file-uploaded' event
+> [debug] [2026-02-07T10:45:27.459Z] Uploaded: C:\Users\nurik\인형만들기\doll-maker-sub\deploy_log_2.txt (468B)
+[client-debug] 2026-02-07T10:45:27.470Z DONE in 832ms: POST https://api.vercel.com/v2/files?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+[client-debug] 2026-02-07T10:45:27.470Z File 63288c8bafe61bfef9b53a15986bfe93fc01988e (C:\Users\nurik\인형만들기\doll-maker-sub\.env) uploaded
+[client-debug] 2026-02-07T10:45:27.470Z Yielding a 'file-uploaded' event
+> [debug] [2026-02-07T10:45:27.470Z] Uploaded: C:\Users\nurik\인형만들기\doll-maker-sub\.env (65B)
+[client-debug] 2026-02-07T10:45:27.478Z DONE in 838ms: POST https://api.vercel.com/v2/files?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+[client-debug] 2026-02-07T10:45:27.478Z File 93c891e7265a01adc3ca62bf7d1cc6ca10f3c4d1 (C:\Users\nurik\인형만들기\doll-maker-sub\src\App.jsx) uploaded
+[client-debug] 2026-02-07T10:45:27.478Z Yielding a 'file-uploaded' event
+> [debug] [2026-02-07T10:45:27.478Z] Uploaded: C:\Users\nurik\인형만들기\doll-maker-sub\src\App.jsx (13.28KB)
+[client-debug] 2026-02-07T10:45:27.564Z DONE in 924ms: POST https://api.vercel.com/v2/files?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+[client-debug] 2026-02-07T10:45:27.564Z File 9341bd2a6ed904e3288d9abb520cb6fad896a5db (C:\Users\nurik\인형만들기\doll-maker-sub\public\assets\iron_suit_result.png) uploaded
+[client-debug] 2026-02-07T10:45:27.564Z Yielding a 'file-uploaded' event
+> [debug] [2026-02-07T10:45:27.564Z] Uploaded: C:\Users\nurik\인형만들기\doll-maker-sub\public\assets\iron_suit_result.png (69.4KB)
+[client-debug] 2026-02-07T10:45:27.565Z DONE in 927ms: POST https://api.vercel.com/v2/files?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+[client-debug] 2026-02-07T10:45:27.565Z File 58d16f48f95b50313ca439a62183b174409e6b5b (C:\Users\nurik\인형만들기\doll-maker-sub\public\assets\jeans.png) uploaded
+[client-debug] 2026-02-07T10:45:27.565Z Yielding a 'file-uploaded' event
+> [debug] [2026-02-07T10:45:27.565Z] Uploaded: C:\Users\nurik\인형만들기\doll-maker-sub\public\assets\jeans.png (79.21KB)
+[client-debug] 2026-02-07T10:45:27.571Z DONE in 933ms: POST https://api.vercel.com/v2/files?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+[client-debug] 2026-02-07T10:45:27.571Z File 67b8c20be51bc79bf5ba81b1ff4f9988c42b6fe3 (C:\Users\nurik\인형만들기\doll-maker-sub\public\assets\skirt.png) uploaded
+[client-debug] 2026-02-07T10:45:27.571Z Yielding a 'file-uploaded' event
+> [debug] [2026-02-07T10:45:27.571Z] Uploaded: C:\Users\nurik\인형만들기\doll-maker-sub\public\assets\skirt.png (56.78KB)
+[client-debug] 2026-02-07T10:45:27.723Z DONE in 1086ms: POST https://api.vercel.com/v2/files?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+[client-debug] 2026-02-07T10:45:27.723Z File 566427971ba2fd7cdbf69cc1b6e4e2e2ce7f12b1 (C:\Users\nurik\인형만들기\doll-maker-sub\public\assets\hanbok.png) uploaded
+[client-debug] 2026-02-07T10:45:27.723Z Yielding a 'file-uploaded' event
+> [debug] [2026-02-07T10:45:27.723Z] Uploaded: C:\Users\nurik\인형만들기\doll-maker-sub\public\assets\hanbok.png (47.54KB)
+[client-debug] 2026-02-07T10:45:27.922Z DONE in 1283ms: POST https://api.vercel.com/v2/files?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+[client-debug] 2026-02-07T10:45:27.922Z File 6b879e36ac26455ecfc8d8fbb73bbc6c27c70c15 (C:\Users\nurik\인형만들기\doll-maker-sub\public\assets\base_character.png) uploaded
+[client-debug] 2026-02-07T10:45:27.922Z Yielding a 'file-uploaded' event
+> [debug] [2026-02-07T10:45:27.922Z] Uploaded: C:\Users\nurik\인형만들기\doll-maker-sub\public\assets\base_character.png (138.39KB)
+[client-debug] 2026-02-07T10:45:27.927Z DONE in 1288ms: POST https://api.vercel.com/v2/files?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+[client-debug] 2026-02-07T10:45:27.927Z File 683b3a34d1a247031368ed85a36bcef957caebe0 (C:\Users\nurik\인형만들기\doll-maker-sub\package-lock.json) uploaded
+[client-debug] 2026-02-07T10:45:27.927Z Yielding a 'file-uploaded' event
+> [debug] [2026-02-07T10:45:27.927Z] Uploaded: C:\Users\nurik\인형만들기\doll-maker-sub\package-lock.json (100.17KB)
+[client-debug] 2026-02-07T10:45:27.927Z All files uploaded
+[client-debug] 2026-02-07T10:45:27.927Z Yielding a 'all-files-uploaded' event
+[client-debug] 2026-02-07T10:45:27.927Z Starting deployment creation
+[client-debug] 2026-02-07T10:45:27.927Z Creating deployment
+[client-debug] 2026-02-07T10:45:27.927Z Sending deployment creation API request
+[client-debug] 2026-02-07T10:45:29.860Z Deployment response: {"alias":["doll-maker-sub-asadalls-projects.vercel.app","doll-maker-sub-nurikiri-7157-asadalls-projects.vercel.app"],"aliasAssigned":false,"automaticAliases":["doll-maker-sub-asadalls-projects.vercel.app","doll-maker-sub-nurikiri-7157-asadalls-projects.vercel.app"],"bootedAt":1770461128733,"buildingAt":1770461128733,"buildSkipped":false,"createdAt":1770461128733,"creator":{"uid":"eTawwpXDRIiaIKMCZueauo29","username":"nurikiri-7157"},"id":"dpl_7NsHG47LhFG8LeGUHuaPhHPe55ip","name":"doll-maker-sub","meta":{"gitCommitAuthorName":"Park coding","gitCommitAuthorEmail":"nurikiri@gmail.com","gitCommitMessage":"chore: Vercel 일시적 배포 오류 해결을 위한 재시도(Rebuild Trigger)","gitCommitRef":"master","gitCommitSha":"2c97606320e72ea9091c82a79998f4d6ff08306d","gitDirty":"1"},"originCacheRegion":"iad1","project":{"id":"prj_ewDc7lthlVAK2YVwE2ZQGZQ3diqn","name":"doll-maker-sub","framework":"vite"},"public":false,"readyState":"INITIALIZING","regions":["iad1"],"source":"cli","status":"INITIALIZING","target":"production","team":{"id":"team_hGo4pELMiCNyjQ0ncZVDGjF4","name":"asadall's projects","slug":"asadalls-projects"},"type":"LAMBDAS","url":"doll-maker-68fsuxk9u-asadalls-projects.vercel.app","version":2,"previewCommentsEnabled":true,"oidcTokenClaims":{"sub":"owner:asadalls-projects:project:doll-maker-sub:environment:production","iss":"https://oidc.vercel.com/asadalls-projects","scope":"owner:asadalls-projects:project:doll-maker-sub:environment:production","aud":"https://vercel.com/asadalls-projects","owner":"asadalls-projects","owner_id":"team_hGo4pELMiCNyjQ0ncZVDGjF4","project":"doll-maker-sub","project_id":"prj_ewDc7lthlVAK2YVwE2ZQGZQ3diqn","environment":"production","plan":"hobby"},"lambdas":[{"id":"bld_lq1z39sbw","createdAt":1770461128976,"entrypoint":".","readyState":"READY","readyStateAt":1770461128976,"output":[]}],"aliasAssignedAt":null,"build":{"env":[]},"builds":[],"createdIn":"sfo1","env":[],"functions":null,"inspectorUrl":"https://vercel.com/asadalls-projects/doll-maker-sub/7NsHG47LhFG8LeGUHuaPhHPe55ip","isInConcurrentBuildsQueue":false,"isInSystemBuildsQueue":true,"ownerId":"team_hGo4pELMiCNyjQ0ncZVDGjF4","plan":"hobby","projectId":"prj_ewDc7lthlVAK2YVwE2ZQGZQ3diqn","projectSettings":{"buildCommand":null,"devCommand":null,"framework":"vite","commandForIgnoringBuildStep":null,"installCommand":null,"outputDirectory":null,"speedInsights":{"id":"FobJSU2v9v3ZIRJfMDKKRWCaqht","hasData":false},"webAnalytics":{"id":"VguAbLm0tTTxyHzrALa4f6ZOy"},"nodeVersion":"24.x"},"routes":[{"src":"^(?:/(.*))$","headers":{"Cache-Control":"public, max-age=0, must-revalidate","Access-Control-Allow-Origin":"*","Content-Security-Policy":"frame-ancestors *"},"continue":true},{"handle":"filesystem"},{"src":"^/api(?:/(.*))$","dest":"/api/$1","check":true},{"src":"^(?:/(.*))$","dest":"/index.html","check":true}],"config":{"version":1,"secureComputePrimaryRegion":null,"secureComputeFallbackRegion":null,"functionTimeout":300,"functionType":"fluid","functionMemoryType":"standard","isUsingActiveCPU":true,"resourceConfig":{"buildQueue":{"configuration":"SKIP_NAMESPACE_QUEUE"}}}}
+[client-debug] 2026-02-07T10:45:29.861Z Deployment created
+[client-debug] 2026-02-07T10:45:29.861Z Yielding a 'created' event
+Inspect: https://vercel.com/asadalls-projects/doll-maker-sub/7NsHG47LhFG8LeGUHuaPhHPe55ip [5s]
+Production: https://doll-maker-68fsuxk9u-asadalls-projects.vercel.app [5s]
+https://doll-maker-68fsuxk9u-asadalls-projects.vercel.app> [debug] [2026-02-07T10:45:29.862Z] Valid access token, skipping token refresh.
+> [debug] [2026-02-07T10:45:29.862Z] Spinner invoked (Building...) with a 0ms delay
+> [debug] [2026-02-07T10:45:29.862Z] #6 → GET https://api.vercel.com/v2/user
+[client-debug] 2026-02-07T10:45:29.862Z Waiting for deployment to be ready...
+[client-debug] 2026-02-07T10:45:29.863Z Waiting for builds and the deployment to complete...
+> [debug] [2026-02-07T10:45:30.192Z] #6 ← 200 OK: sfo1::sphcf-1770461129484-1313b1d510b1 [330ms]
+> [debug] [2026-02-07T10:45:30.193Z] Valid access token, skipping token refresh.
+> [debug] [2026-02-07T10:45:30.194Z] #7 → GET https://api.vercel.com/teams/team_hGo4pELMiCNyjQ0ncZVDGjF4?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+> [debug] [2026-02-07T10:45:30.497Z] #7 ← 200 OK: sfo1::sphcf-1770461129815-f459f2bb0e06 [303ms]
+> [debug] [2026-02-07T10:45:30.499Z] Valid access token, skipping token refresh.
+> [debug] [2026-02-07T10:45:30.499Z] #8 → GET https://api.vercel.com/v3/now/deployments/dpl_7NsHG47LhFG8LeGUHuaPhHPe55ip/events?direction=forward&follow=1&format=lines&teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+> [debug] [2026-02-07T10:45:32.086Z] #8 ← 200 OK: sfo1::sphcf-1770461130119-39efe6fbad8b [1.59s]
+> [debug] [2026-02-07T10:45:32.087Z] Spinner invoked (Building: Running build in Portland, USA (West) – pdx1) with a 0ms delay
+> [debug] [2026-02-07T10:45:32.087Z] Spinner invoked (Building: Build machine configuration: 2 cores, 8 GB) with a 0ms delay
+> [debug] [2026-02-07T10:45:32.087Z] Spinner invoked (Building: Retrieving list of deployment files...) with a 0ms delay
+> [debug] [2026-02-07T10:45:32.087Z] Spinner invoked (Building: Previous build caches not available.) with a 0ms delay
+> [debug] [2026-02-07T10:45:32.087Z] Spinner invoked (Building: Downloading 25 deployment files...) with a 0ms delay
+[client-debug] 2026-02-07T10:45:32.231Z Deployment state changed to BUILDING
+[client-debug] 2026-02-07T10:45:32.231Z Yielding a 'building' event
+> [debug] [2026-02-07T10:45:32.231Z] Spinner invoked (Building: Downloading 25 deployment files...) with a 0ms delay
+> [debug] [2026-02-07T10:45:35.188Z] Spinner invoked (Building: Running "vercel build") with a 0ms delay
+> [debug] [2026-02-07T10:45:36.220Z] Spinner invoked (Building: Vercel CLI 50.11.0) with a 0ms delay
+> [debug] [2026-02-07T10:45:36.220Z] Spinner invoked (Building: Installing dependencies...) with a 0ms delay
+> [debug] [2026-02-07T10:45:41.387Z] Spinner invoked (Building: added 163 packages in 4s) with a 0ms delay
+> [debug] [2026-02-07T10:45:41.387Z] Spinner invoked (Building: 34 packages are looking for funding) with a 0ms delay
+> [debug] [2026-02-07T10:45:41.387Z] Spinner invoked (Building: run `npm fund` for details) with a 0ms delay
+> [debug] [2026-02-07T10:45:41.387Z] Spinner invoked (Building: Running "npm run build") with a 0ms delay
+> [debug] [2026-02-07T10:45:41.387Z] Spinner invoked (Building: > minji-dressup@0.0.0 build) with a 0ms delay
+> [debug] [2026-02-07T10:45:41.387Z] Spinner invoked (Building: > vite build) with a 0ms delay
+> [debug] [2026-02-07T10:45:41.387Z] Spinner invoked (Building: vite v7.3.1 building client environment for production...) with a 0ms delay
+> [debug] [2026-02-07T10:45:41.387Z] Spinner invoked (Building: transforming...) with a 0ms delay
+> [debug] [2026-02-07T10:45:43.453Z] Spinner invoked (Building: ✓ 2108 modules transformed.) with a 0ms delay
+> [debug] [2026-02-07T10:45:43.453Z] Spinner invoked (Building: rendering chunks...) with a 0ms delay
+> [debug] [2026-02-07T10:45:43.453Z] Spinner invoked (Building: computing gzip size...) with a 0ms delay
+> [debug] [2026-02-07T10:45:43.453Z] Spinner invoked (Building: dist/index.html                   0.46 kB │ gzip:   0.30 kB) with a 0ms delay
+> [debug] [2026-02-07T10:45:43.453Z] Spinner invoked (Building: dist/assets/index-4b2_6wqf.css    6.95 kB │ gzip:   2.14 kB) with a 0ms delay
+> [debug] [2026-02-07T10:45:43.454Z] Spinner invoked (Building: dist/assets/index-YHub4MT0.js   326.30 kB │ gzip: 105.74 kB) with a 0ms delay
+> [debug] [2026-02-07T10:45:43.454Z] Spinner invoked (Building: ✓ built in 2.92s) with a 0ms delay
+> [debug] [2026-02-07T10:45:43.454Z] Spinner invoked (Building: Build Completed in /vercel/output [8s]) with a 0ms delay
+> [debug] [2026-02-07T10:45:43.454Z] Spinner invoked (Building: Deploying outputs...) with a 0ms delay
+> [debug] [2026-02-07T10:45:50.698Z] Spinner invoked (Building: Deployment completed) with a 0ms delay
+> [debug] [2026-02-07T10:45:50.698Z] Spinner invoked (Building: Creating build cache...) with a 0ms delay
+[client-debug] 2026-02-07T10:45:51.284Z Deployment state changed to READY
+[client-debug] 2026-02-07T10:45:51.284Z Yielding a 'ready' event
+[2K[1A[2K[GProduction: https://doll-maker-68fsuxk9u-asadalls-projects.vercel.app [26s]
+> [debug] [2026-02-07T10:45:51.286Z] Spinner invoked (Completing...) with a 0ms delay
+[client-debug] 2026-02-07T10:45:51.286Z Deployment alias assigned
+[client-debug] 2026-02-07T10:45:51.286Z Deployment is ready
+[client-debug] 2026-02-07T10:45:51.286Z Yielding a 'alias-assigned' event
+Aliased: https://doll-maker-sub.vercel.app [26s]
+> [debug] [2026-02-07T10:45:51.286Z] Valid access token, skipping token refresh.
+> [debug] [2026-02-07T10:45:51.287Z] #9 → GET https://api.vercel.com/v13/deployments/dpl_7NsHG47LhFG8LeGUHuaPhHPe55ip?teamId=team_hGo4pELMiCNyjQ0ncZVDGjF4
+> [debug] [2026-02-07T10:45:52.031Z] #9 ← 200 OK: sfo1::mgnzl-1770461150907-acd93af381fa [744ms]
+> [debug] [2026-02-07T10:45:53.154Z] Vercel CLI 50.13.2
+
+> [debug] [2026-02-07T10:45:53.665Z] Telemetry event tracked
+> [debug] [2026-02-07T10:45:53.796Z] Telemetry subprocess exited with code 0
+> [debug] [2026-02-07T10:45:53.800Z] Spawning C:\Users\nurik\AppData\Roaming\npm\node_modules\vercel\dist\get-latest-worker.cjs
+> '[debug] [2026-02-07T10:45:53.961Z] Notifying parent we're ready
+> '[debug] [2026-02-07T10:45:53.965Z] Received message from parent: {
+  cacheFile: 'C:\\Users\\nurik\\AppData\\Local\\com.vercel.cli\\Cache\\package-updates\\vercel-latest.json',
+  distTag: 'latest',
+  name: 'vercel',
+  updateCheckInterval: 86400000
+}
+> '[debug] [2026-02-07T10:45:53.966Z] Disconnecting from parent
+> '[debug] [2026-02-07T10:45:53.967Z] Checking lock file: C:\Users\nurik\AppData\Local\com.vercel.cli\Cache\package-updates\vercel-latest.lock
+> '[debug] [2026-02-07T10:45:53.969Z] Found lock file with pid: 28536
+> '[debug] [2026-02-07T10:45:53.970Z] Resetting lock file: Error: kill ESRCH
+> '[debug] [2026-02-07T10:45:53.970Z] Initializing lock file with pid 12636
+> '[debug] [2026-02-07T10:45:53.974Z] Fetching https://registry.npmjs.org/-/package/vercel/dist-tags
