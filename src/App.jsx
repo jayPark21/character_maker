@@ -11,37 +11,37 @@ const playSound = (type) => {
     magic: new Audio('https://assets.mixkit.co/active_storage/sfx/2635/2635-preview.mp3'),
     success: new Audio('https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3')
   };
-  if(sounds[type]) {
+  if (sounds[type]) {
     sounds[type].volume = 0.5;
     sounds[type].play().catch(e => console.log('Audio suspended', e));
   }
 };
 
 const ASSETS = {
-  characterBase: '/character_maker/assets/base_character.png', 
+  characterBase: '/assets/base_character.png',
   items: [
-    { 
-      id: 'iron-suit', 
-      name: 'Iron Suit', 
-      img: '/character_maker/assets/iron_suit.png', 
+    {
+      id: 'iron-suit',
+      name: 'Iron Suit',
+      img: '/assets/iron_suit.png',
       prompt: "Image Synthesis: Integrate the character's face and purple hair into the red and gold superhero iron suit. Maintain character identity while achieving a perfect blend between the base model and the armor. Flat vector style."
     },
-    { 
-      id: 'hanbok', 
-      name: 'Lovely Hanbok', 
-      img: '/character_maker/assets/hanbok.png', 
+    {
+      id: 'hanbok',
+      name: 'Lovely Hanbok',
+      img: '/assets/hanbok.png',
       prompt: "Image Synthesis: Start with the base character (cute girl, purple pigtails). DRESS HER in a traditional Korean Hanbok (blue top, cream skirt). REPLACE her clothes but KEEP her exact face, hair, and pose. Flat 2D vector style."
     },
-    { 
-      id: 'dress', 
-      name: 'Denim Dress', 
-      img: '/character_maker/assets/dress.png', 
+    {
+      id: 'dress',
+      name: 'Denim Dress',
+      img: '/assets/dress.png',
       prompt: "Image Synthesis: Start with the base character (cute girl, purple pigtails). DRESS HER in a blue denim dress with heart patterns. REPLACE her clothes but KEEP her exact face and hair. Flat 2D vector style."
     },
-    { 
-      id: 'jeans', 
-      name: 'Heart Jeans', 
-      img: '/character_maker/assets/jeans.png', 
+    {
+      id: 'jeans',
+      name: 'Heart Jeans',
+      img: '/assets/jeans.png',
       prompt: "Image Synthesis: Start with the base character (cute girl, purple pigtails). DRESS HER in a cute white t-shirt and heart-patterned jeans. REPLACE her clothes but KEEP her exact face and hair. Flat 2D vector style."
     }
   ]
@@ -51,7 +51,7 @@ export default function App() {
   const [charSelected, setCharSelected] = useState(false);
   const [selectedItemId, setSelectedItemId] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [showResult, setShowResult] = useState(false); 
+  const [showResult, setShowResult] = useState(false);
   const [resultImage, setResultImage] = useState(null);
   const [error, setError] = useState(null);
 
@@ -92,7 +92,7 @@ export default function App() {
       } else {
         throw new Error(data.error || "No image returned from server.");
       }
-      
+
       setShowResult(true);
       playSound('success');
       triggerConfetti();
@@ -100,7 +100,7 @@ export default function App() {
       console.error("Serverless Gen Failed:", err);
       // Fallback
       setShowResult(true);
-      setResultImage(selectedItem.img); 
+      setResultImage(selectedItem.img);
       setError(`Server Error: ${err.message}. Showing Preview.`);
     } finally {
       setIsProcessing(false);
@@ -153,7 +153,7 @@ export default function App() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0, scale: 0.8 }}
             >
-              <div 
+              <div
                 className={`character-box ${charSelected ? 'selected' : ''}`}
                 onClick={() => { playSound('pop'); setCharSelected(true); }}
               >
@@ -192,23 +192,23 @@ export default function App() {
                 <div className="result-label">AI Synthesis Result ✨</div>
                 <div className="result-image-container">
                   {resultImage && !isProcessing ? (
-                     <img src={resultImage} alt="AI Result" className="final-result-image" />
+                    <img src={resultImage} alt="AI Result" className="final-result-image" />
                   ) : (
                     <div className="synthesis-placeholder">
-                       <img src={ASSETS.characterBase} alt="Synthesizing..." className="base-low-op" />
-                       <div className="processing-overlay">
-                          <RefreshCw className="spin" size={48} />
-                          <span>Rendering Composition...</span>
-                       </div>
+                      <img src={ASSETS.characterBase} alt="Synthesizing..." className="base-low-op" />
+                      <div className="processing-overlay">
+                        <RefreshCw className="spin" size={48} />
+                        <span>Rendering Composition...</span>
+                      </div>
                     </div>
                   )}
 
                   {error && (
                     <div className="synthesis-badge error">
-                       ⚠️ {error}
+                      ⚠️ {error}
                     </div>
                   )}
-                  
+
                   {!error && !isProcessing && (
                     <div className="synthesis-badge success">
                       <Sparkles size={16} /> AI Synthesized (A+B)
@@ -219,15 +219,15 @@ export default function App() {
                     <div className="indicator">
                       <span className="dot source-a"></span>
                       <div className="text-group">
-                         <span className="label">Identity:</span>
-                         <span className="value">base_character.png (90%)</span>
+                        <span className="label">Identity:</span>
+                        <span className="value">base_character.png (90%)</span>
                       </div>
                     </div>
                     <div className="indicator">
                       <span className="dot source-b"></span>
                       <div className="text-group">
-                         <span className="label">Style: {selectedItemObj?.name}</span>
-                         <span className="value">(100%)</span>
+                        <span className="label">Style: {selectedItemObj?.name}</span>
+                        <span className="value">(100%)</span>
                       </div>
                     </div>
                   </div>
