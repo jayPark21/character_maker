@@ -1,6 +1,5 @@
 
 import React, { useState, useEffect } from 'react';
-import useSound from 'use-sound';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check, Loader, Wand2, RefreshCw, Sparkles, Plus } from 'lucide-react';
 import './App.css';
