@@ -23,7 +23,7 @@ const ASSETS = {
     {
       id: 'iron-suit',
       name: 'Iron Suit',
-      img: '/assets/iron_suit.png',
+      img: '/assets/iron_suit_result.png',
       prompt: "Image Synthesis: Integrate the character's face and purple hair into the red and gold superhero iron suit. Maintain character identity while achieving a perfect blend between the base model and the armor. Flat vector style."
     },
     {
