@@ -4,5 +4,16 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/character_maker/', // 노션 임베드 및 GitHub Pages 경로 호환성을 위해 절대 경로로 지정
+  // Adaptive base path handling:
+  // - Vercel & Local: Default to '/' for root deployment
+  // - GitHub Pages: Only explicitly set via environment variable if needed
+  base: process.env.VITE_BASE_PATH || '/',
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000', // Proxy only for local dev (Vercel handles this in prod)
+        changeOrigin: true,
+      }
+    }
+  }
 })
