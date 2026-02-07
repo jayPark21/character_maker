@@ -318,3 +318,41 @@ body {
     flex-direction: column;
   }
 }
+
+/* Synthesis Infographic Styles */
+.synthesis-infographic {
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 15px;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px dashed #ddd;
+}
+
+.source-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: #666;
+  font-weight: 600;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.dot.character {
+  background: var(--primary);
+}
+
+.dot.item {
+  background: var(--secondary);
+}
