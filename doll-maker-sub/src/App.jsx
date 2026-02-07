@@ -5,7 +5,7 @@ import { Check, Loader, Wand2, RefreshCw, Sparkles, Plus, Zap, Heart, Star } fro
 import './App.css';
 
 import baseCharacter from '/assets/base_character.png';
-import ironSuit from '/assets/iron_suit_result.png';
+import militaryUniform from '/assets/military.png';
 import hanbok from '/assets/hanbok.png';
 import dress from '/assets/dress.png';
 import jeans from '/assets/jeans.png';
@@ -14,10 +14,10 @@ const ASSETS = {
   characterBase: baseCharacter,
   items: [
     {
-      id: 'iron-suit',
-      name: 'Iron Suit',
-      img: ironSuit,
-      prompt: "Image Synthesis: Integrate the character's face and purple hair into the red and gold superhero iron suit. Maintain character identity while achieving a perfect blend between the base model and the armor. Flat vector style."
+      id: 'military',
+      name: 'Military Uniform',
+      img: militaryUniform,
+      prompt: "Image Synthesis: Integrate the character's face and purple hair into a cool camouflage military uniform with a beret. Maintain character identity. Professional vector illustration style."
     },
     {
       id: 'hanbok',
@@ -94,8 +94,88 @@ function App() {
   }, [isProcessing, isItemGenerating]);
 
   // Sound Effects
+  // Sound Effects (Web Audio API Synthesizer)
   const playSound = (type) => {
-    // Placeholder for sound logic
+    try {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContext) return;
+
+      const ctx = new AudioContext();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      const now = ctx.currentTime;
+
+      if (type === 'click') {
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(800, now);
+        osc.frequency.exponentialRampToValueAtTime(1200, now + 0.1);
+        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+        osc.start(now);
+        osc.stop(now + 0.1);
+      } else if (type === 'pop') {
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(400, now);
+        osc.frequency.exponentialRampToValueAtTime(600, now + 0.1);
+        gain.gain.setValueAtTime(0.5, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
+        osc.start(now);
+        osc.stop(now + 0.15);
+      } else if (type === 'success') {
+        // Arpeggio
+        const notes = [523.25, 659.25, 783.99, 1046.50]; // C Major
+        notes.forEach((freq, i) => {
+          const osc2 = ctx.createOscillator();
+          const gain2 = ctx.createGain();
+          osc2.connect(gain2);
+          gain2.connect(ctx.destination);
+
+          osc2.type = 'sine';
+          osc2.frequency.value = freq;
+
+          const startTime = now + (i * 0.1);
+          gain2.gain.setValueAtTime(0, startTime);
+          gain2.gain.linearRampToValueAtTime(0.2, startTime + 0.05);
+          gain2.gain.exponentialRampToValueAtTime(0.01, startTime + 0.5);
+
+          osc2.start(startTime);
+          osc2.stop(startTime + 0.5);
+        });
+      } else if (type === 'magic') {
+        // Sparkle effect
+        for (let i = 0; i < 10; i++) {
+          const osc2 = ctx.createOscillator();
+          const gain2 = ctx.createGain();
+          osc2.connect(gain2);
+          gain2.connect(ctx.destination);
+
+          osc2.type = 'sine';
+          osc2.frequency.value = 800 + Math.random() * 2000;
+
+          const startTime = now + (Math.random() * 0.5);
+          gain2.gain.setValueAtTime(0, startTime);
+          gain2.gain.linearRampToValueAtTime(0.1, startTime + 0.05);
+          gain2.gain.exponentialRampToValueAtTime(0.01, startTime + 0.3);
+
+          osc2.start(startTime);
+          osc2.stop(startTime + 0.3);
+        }
+      } else if (type === 'error') {
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(150, now);
+        osc.frequency.linearRampToValueAtTime(100, now + 0.3);
+        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+        osc.start(now);
+        osc.stop(now + 0.3);
+      }
+    } catch (err) {
+      console.error("Audio Synths Error:", err);
+    }
   };
 
   const handleGenerate = async (targetItem) => {
@@ -415,7 +495,6 @@ function App() {
 
               <div className="result-image-container item-only-preview">
                 <img src={previewItem.img} alt="Generated Item" className="final-result-image" />
-                <div className="synthesis-badge">디자인 완료</div>
               </div>
 
               <div className="item-preview-info">
@@ -451,17 +530,12 @@ function App() {
 
               <div className="result-image-container">
                 <img src={resultImage} alt="Generated Character" className="final-result-image" />
-                <div className="synthesis-badge success">성공적으로 생성됨</div>
               </div>
 
               <div className="result-info">
-                <div className="score-badge">정확도: 98% | 스타일: 100% | 운수: 대길! 🧧</div>
-                <p>캐릭터 베이스: 원본 유지 (95%)</p>
-                <p>추가 스타일: {selectedItem?.name} (적용완료)</p>
+                <h3>변신 완료! 🔥</h3>
+                <p>{selectedItem?.name} 착용 성공!</p>
               </div>
-
-              <h3>변신 완료! 🔥</h3>
-              <p>대표님의 센스있는 선택으로 새로운 캐릭터가 탄생했습니다. 정말 멋지네요!</p>
 
               <button className="reset-btn" onClick={() => { setResultImage(null); setSelectedItem(null); }}>
                 <RefreshCw size={18} /> 다른 옷 입히기
