@@ -46,6 +46,7 @@ export default function App() {
   const [charSelected, setCharSelected] = useState(false);
   const [selectedItemId, setSelectedItemId] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [showResult, setShowResult] = useState(false); // New state to control screen transition
   const [resultImage, setResultImage] = useState(null);
   const [error, setError] = useState(null);
 
@@ -131,6 +132,8 @@ export default function App() {
 
       // [Synthesis Router] 
       // In a real env, this would be an API call passing two Image IDs/URLs
+      setShowResult(true);
+
       if (selectedItem.id === 'iron-suit') {
         setResultImage(selectedItem.img); // Verified synthesis result
       } else {
@@ -174,6 +177,7 @@ export default function App() {
   const resetGame = () => {
     playSound('pop');
     setResultImage(null);
+    setShowResult(false);
     setCharSelected(false);
     setSelectedItemId(null);
     setIsProcessing(false);
@@ -188,7 +192,7 @@ export default function App() {
         </header>
 
         <AnimatePresence mode="wait">
-          {!resultImage ? (
+          {!showResult ? (
             <motion.div
               className="selection-stage"
               key="selection"
@@ -250,7 +254,17 @@ export default function App() {
                 <div className="result-label">AI Synthesis Result ✨</div>
 
                 <div className="result-image-container">
-                  <img src={resultImage} alt="AI Result" className="final-result-image" />
+                  {resultImage ? (
+                    <img src={resultImage} alt="AI Result" className="final-result-image" />
+                  ) : (
+                    <div className="synthesis-placeholder">
+                      <img src={ASSETS.characterBase} alt="Synthesizing..." className="base-low-op" />
+                      <div className="processing-overlay">
+                        <RefreshCw className="spin" size={48} />
+                        <span>Rendering Composition...</span>
+                      </div>
+                    </div>
+                  )}
 
                   <div className="synthesis-infographic">
                     <div className="source-indicators">

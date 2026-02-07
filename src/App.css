@@ -356,3 +356,42 @@ body {
 .dot.item {
   background: var(--secondary);
 }
+
+/* Synthesis Placeholder Styles */
+.synthesis-placeholder {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1/1;
+  background: #f9f9f9;
+  border-radius: 15px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.base-low-op {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0.3;
+  filter: grayscale(100%);
+}
+
+.processing-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  color: var(--primary);
+  font-family: 'Jua', sans-serif;
+  font-size: 1.2rem;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(2px);
+}
