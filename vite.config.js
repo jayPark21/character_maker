@@ -4,16 +4,18 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  // Adaptive base path handling:
-  // - Vercel & Local: Default to '/' for root deployment
-  // - GitHub Pages: Only explicitly set via environment variable if needed
-  base: process.env.VITE_BASE_PATH || '/',
+  // Force base path to '/' for Vercel deployment.
+  // This solves the 404 issue where assets are requested from /character_maker/ instead of root.
+  base: '/',
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:3000', // Proxy only for local dev (Vercel handles this in prod)
+        target: 'http://localhost:3000',
         changeOrigin: true,
       }
     }
+  },
+  build: {
+    outDir: 'dist',
   }
 })
