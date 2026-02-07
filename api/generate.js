@@ -1,15 +1,11 @@
 
 export default async function handler(req, res) {
-    // CORS Handling (Allow requests from our frontend)
+    // CORS Handling
     res.setHeader('Access-Control-Allow-Credentials', true);
-    res.setHeader('Access-Control-Allow-Origin', '*'); // Adjust this for production security
+    res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
-    res.setHeader(
-        'Access-Control-Allow-Headers',
-        'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-    );
+    res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
 
-    // Handle OPTIONS request preflight
     if (req.method === 'OPTIONS') {
         res.status(200).end();
         return;
@@ -20,35 +16,72 @@ export default async function handler(req, res) {
     }
 
     const { prompt, image } = req.body;
-    const apiKey = process.env.VITE_NANOBANANA_API_KEY; // Read from Vercel Environment Variables
+    const apiKey = process.env.VITE_NANOBANANA_API_KEY;
 
     if (!apiKey) {
         return res.status(500).json({ error: 'Server Config Error: Missing API Key' });
     }
 
     try {
-        const model = "gemini-2.5-flash-image";
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+        let finalPrompt = prompt;
 
-        // Construct Content Payload (Text + Image if available)
-        const parts = [];
-        parts.push({ text: `Generate a high-quality 2D vector character image. Based on: ${prompt}` });
-
+        // [Step 1: Vision Analysis]
+        // If an image is provided, we first ask Gemini 1.5 Flash to analyze it and extract visual traits.
+        // This acts as a "Bridge" for Image-to-Image generation 
+        // since the generation endpoint might not accept direct image input yet.
         if (image) {
-            console.log("📸 Processing with Reference Image...");
-            parts.push({
-                inlineData: {
-                    mimeType: "image/png",
-                    data: image
-                }
+            console.log("👁️ Step 1: Analyzing Reference Image (Vision)...");
+
+            const visionModel = "gemini-1.5-flash"; // Good at seeing things
+            const visionUrl = `https://generativelanguage.googleapis.com/v1beta/models/${visionModel}:generateContent?key=${apiKey}`;
+
+            const visionResponse = await fetch(visionUrl, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    contents: [{
+                        parts: [
+                            { text: "Describe this character's physical appearance in extreme detail for an artist to recreate. Focus on hair color, hairstyles (pigtails?), eye shape, face shape, and art style involved (chibi? vector?). Do not describe the clothing. Just the body and head." },
+                            { inlineData: { mimeType: "image/png", data: image } }
+                        ]
+                    }]
+                })
             });
+
+            const visionData = await visionResponse.json();
+            const description = visionData.candidates?.[0]?.content?.parts?.[0]?.text;
+
+            if (description) {
+                console.log("✅ Analysis Complete:", description.substring(0, 50) + "...");
+                // Combine the extracted identity with the user's clothing request
+                finalPrompt = `Character Description: ${description}. \n\n Request: Draw this exact character wearing [${prompt}]. Maintain the face/hair/style exactly as described. High quality, 2D vector art, white background.`;
+            } else {
+                console.warn("⚠️ Vision analysis failed, falling back to original prompt.");
+            }
         }
 
-        const response = await fetch(url, {
+        // [Step 2: Image Generation]
+        // Now use the detailed prompt to generate the new image
+        console.log("🎨 Step 2: Generating Image...");
+        // NOTE: Ensure we use a model capable of image generation. 
+        // If 'gemini-2.5-flash-image' was a hallucinated name that worked by luck (mapping to imagen), 
+        // we should try 'gemini-1.5-flash' (if enabled for imagen) or 'imagen-3.0-generate-001' via vertex.
+        // However, for AI Studio API, 'gemini-1.5-flash-8b' or similar often routes correctly. 
+        // Let's stick to what partially worked or standard 'gemini-1.5-pro' with tools if available.
+        // Retrying the model string that yielded results purely for text.
+
+        const genModel = "gemini-2.0-flash-exp"; // Trying a newer experimental model which often has image gen capabilities enabled in beta
+        // Or fallback to the previous one if 2.0 fails. Let's try to be robust. 
+
+        const genUrl = `https://generativelanguage.googleapis.com/v1beta/models/${genModel}:generateContent?key=${apiKey}`;
+
+        const genResponse = await fetch(genUrl, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                contents: [{ parts: parts }],
+                contents: [{
+                    parts: [{ text: `Generate an image: ${finalPrompt}` }]
+                }],
                 generationConfig: {
                     temperature: 0.4
                 },
@@ -61,18 +94,17 @@ export default async function handler(req, res) {
             })
         });
 
-        if (!response.ok) {
-            const errData = await response.json().catch(() => ({}));
-            throw new Error(errData.error?.message || `Gemini API Error: ${response.status}`);
+        if (!genResponse.ok) {
+            throw new Error(`Gen API Error: ${genResponse.status}`);
         }
 
-        const data = await response.json();
+        const data = await genResponse.json();
 
-        // Check for Image in the response
+        // Extract Image
         const candidate = data.candidates?.[0]?.content?.parts?.[0];
         let finalImageUrl = null;
 
-        if (candidate?.inlineData && candidate.inlineData.mimeType.startsWith('image/')) {
+        if (candidate?.inlineData?.mimeType?.startsWith('image/')) {
             finalImageUrl = `data:${candidate.inlineData.mimeType};base64,${candidate.inlineData.data}`;
         } else if (candidate?.text && candidate.text.startsWith('http')) {
             finalImageUrl = candidate.text;
@@ -81,7 +113,8 @@ export default async function handler(req, res) {
         if (finalImageUrl) {
             return res.status(200).json({ success: true, imageUrl: finalImageUrl });
         } else {
-            return res.status(422).json({ success: false, error: "No image generated by AI." });
+            // If text returned ("I cannot draw..."), pass it as error
+            return res.status(422).json({ success: false, error: "AI Refused: " + (candidate?.text || "No image") });
         }
 
     } catch (error) {

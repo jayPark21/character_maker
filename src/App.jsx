@@ -70,7 +70,7 @@ export default function App() {
 
     try {
       // 1. Load Base Image (Character)
-      // We need to send the actual image data to the server for "Image-to-Image" editing
+      // We need to send the actual image data to the server for "Image-to-Image" analysis
       const baseImgResponse = await fetch(ASSETS.characterBase);
       const baseBlob = await baseImgResponse.blob();
 
@@ -78,7 +78,7 @@ export default function App() {
       const reader = new FileReader();
       const base64Promise = new Promise((resolve) => {
         reader.onloadend = () => {
-          const base64data = reader.result.split(',')[1]; // Remove "data:image/png;base64," header
+          const base64data = reader.result.split(',')[1]; // Remove header
           resolve(base64data);
         };
       });
@@ -86,14 +86,14 @@ export default function App() {
       const base64Image = await base64Promise;
 
       // [Vercel Serverless Function Call]
-      console.log("🚀 Requesting Vercel Serverless Function (/api/generate) with Reference Image...");
+      console.log("🚀 Requesting Vercel Function with Base Image...");
 
       const response = await fetch('/api/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           prompt: selectedItem.prompt,
-          image: base64Image // Sending the base character image!
+          image: base64Image // Sending the base character image is CRITICAL!
         })
       });
 
