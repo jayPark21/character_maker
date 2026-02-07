@@ -69,14 +69,32 @@ export default function App() {
     playSound('magic');
 
     try {
+      // 1. Load Base Image (Character)
+      // We need to send the actual image data to the server for "Image-to-Image" editing
+      const baseImgResponse = await fetch(ASSETS.characterBase);
+      const baseBlob = await baseImgResponse.blob();
+
+      // Convert Blob to Base64
+      const reader = new FileReader();
+      const base64Promise = new Promise((resolve) => {
+        reader.onloadend = () => {
+          const base64data = reader.result.split(',')[1]; // Remove "data:image/png;base64," header
+          resolve(base64data);
+        };
+      });
+      reader.readAsDataURL(baseBlob);
+      const base64Image = await base64Promise;
+
       // [Vercel Serverless Function Call]
-      // No API key needed on the client side! Secure & Clean.
-      console.log("🚀 Requesting Vercel Serverless Function (/api/generate)...");
+      console.log("🚀 Requesting Vercel Serverless Function (/api/generate) with Reference Image...");
 
       const response = await fetch('/api/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt: selectedItem.prompt })
+        body: JSON.stringify({
+          prompt: selectedItem.prompt,
+          image: base64Image // Sending the base character image!
+        })
       });
 
       if (!response.ok) {

@@ -19,7 +19,7 @@ export default async function handler(req, res) {
         return res.status(405).json({ error: 'Method Not Allowed' });
     }
 
-    const { prompt } = req.body;
+    const { prompt, image } = req.body;
     const apiKey = process.env.VITE_NANOBANANA_API_KEY; // Read from Vercel Environment Variables
 
     if (!apiKey) {
@@ -30,13 +30,25 @@ export default async function handler(req, res) {
         const model = "gemini-2.5-flash-image";
         const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
+        // Construct Content Payload (Text + Image if available)
+        const parts = [];
+        parts.push({ text: `Generate a high-quality 2D vector character image. Based on: ${prompt}` });
+
+        if (image) {
+            console.log("📸 Processing with Reference Image...");
+            parts.push({
+                inlineData: {
+                    mimeType: "image/png",
+                    data: image
+                }
+            });
+        }
+
         const response = await fetch(url, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                contents: [{
-                    parts: [{ text: `Generate a high-quality 2D vector character image. Based on: ${prompt}` }]
-                }],
+                contents: [{ parts: parts }],
                 generationConfig: {
                     temperature: 0.4
                 },
